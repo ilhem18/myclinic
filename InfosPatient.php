@@ -89,8 +89,13 @@
                     <li>Fréquence cardiaque: </li>
                     <li>pression artérielle: </li>
                 </ul>
-            </div>
-            <div class='Ordonnance'>
+            </div>"; ?>
+            <?php 
+            require 'config.php';
+            $count = mysqli_query($con, "SELECT * FROM ordonnance");
+            if(mysqli_num_rows($count) > 0) { ?>
+            <?php 
+            "<div class='Ordonnance'>
                 <h2>Ordonnance 11/01/2023</h2>
                 <table class='table'>
                     <thead class='thead-light'>
