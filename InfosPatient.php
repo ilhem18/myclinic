@@ -41,13 +41,6 @@
             <div class="header">
                 <h2>Infos général</h2>
                 <div class="info">
-                    <?php
-                    require 'config.php';
-                    $id = $_GET['id_patient'];
-
-                    $show = mysqli_query($con, "SELECT * FROM patient WHERE id_patient='$id'"); 
-
-                    ?>
                    <form action="infosPatient.php" method="POST">
                         <?php 
                          require 'config.php';
@@ -120,12 +113,12 @@
         <?php } ?>
         <div class="top-right">
             <!--<button type="submit"><a href="nv_consultation.php">Nouvelle consultation</a></button>-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nouvelle consultation</buton>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ConsultationModal">Nouvelle consultation</buton>
         </div>
     </div>
 
 <!--Modal consultation + ordonnance-->
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ConsultationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -135,7 +128,7 @@
         </button>
       </div>
       <div class="modal-body">
-    <form>
+    <form method="GET">
         <div class="form-row">
         <div class="form-group col-7">
             <label for="">Patient</label>
