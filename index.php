@@ -49,8 +49,7 @@
     <tr>
       <th scope="col">Nom</th>
       <th scope="col">Age</th>
-      <th scope="col">Dernière consultation</th>
-      <th scope="col">Motif</th>
+      <th scope="col">Dernière consultation</th>    
       <th scope="col" colspan="3"></th>
     </tr>
   </thead>
@@ -60,7 +59,6 @@
       <input type="hidden" class="id_patient" name="id_patient" value="<?php echo $row['id_patient']; ?>">
       <td scope="row"><?php echo $row['name'] ?></td>
       <td><?php echo $row['age'] ?></td>
-      <td></td>
       <td></td>
       <td>
         <a href="infosPatient.php?id_patient=<?php echo $row['id_patient']; ?>" class="btn btn-primary"><i class="fa-solid fa-file" title="afficher"></i></a>

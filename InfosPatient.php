@@ -151,6 +151,7 @@
         </div>
         </div>
     </form>
+    <br>
     <form>
         <div class="form-row">
         <div class="form-group col-7">
@@ -163,6 +164,55 @@
         </div>
         </div>
     </form>
+    <br>
+    <div class="ordonnance">
+        <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Médicament</th>
+                <th scope="col">Posologie</th>
+                <th scope="col">Nbr d'unité</th>
+                <th scope="col">Qsp</th>
+                <th scope="col" colspan="2"></th>
+            </tr>
+        </thead>
+        <?php 
+        require 'config.php';
+        $reload = mysqli_query($con, "SELECT * FROM medicament");
+        if(mysqli_num_rows($reload) > 0) {
+        ?>
+        <?php 
+        "<tbody>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th><button class='btn btn-primary'>supprimer</button></th>
+            <th><button class='btn btn-primary'>modifier</button></th>
+        </tr>
+        </tbody>";
+        ?>
+        <?php } ?>
+        </table>
+    <form>
+        <div class="form-row">
+        <div class="col">
+        <input type="text" class="form-control">
+        </div>
+        <div class="col">
+        <input type="text" class="form-control">
+        </div>
+        <div class="col">
+        <input type="text" class="form-control">
+        </div>
+        <div class="col">
+        <input type="text" class="form-control">
+        </div>
+        </div>
+        <button type="submit" name="ajout_medicament" class="btn btn-primary">+</button>
+    </form>
+    </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
