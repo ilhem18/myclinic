@@ -33,8 +33,17 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajoutpatientpmodal"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Ajouter un patient</button>
         <a href="index.php?logout='1'"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Se déconnecter</a>
     </div>
-    
 
+
+    <!--current date-->
+      <div class="date">
+        <?php 
+          $jour = getdate();
+          $semaine = array(" Dimanche"," Lundi"," Mardi"," Mercredi"," Jeudi"," vendredi"," samedi");
+          $mois =array(1=>" janvier "," février "," mars "," avril "," mai "," juin "," juillet "," août "," septembre "," octobre "," novembre "," décembre ");
+        echo $semaine[date('w')] ," ",date('j')," ", $mois[date('n')], date('Y'),"";
+         ?>
+    </div>
     <!--Tableau des patient-->
     <div class="title">
         <h1>Liste des patients</h1>
@@ -114,46 +123,45 @@
   </div>
 </div>
 
-<!--edit modal-->
+
 <!-- Edit -->
-<div class="modal fade" id="edit_<?php echo $row['id_patient']; ?>" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="edit_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">Modifications</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="exampleModalLabel">Modifier Patinet</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+    <form method="POST" action="crudPatient.php?id_patient=<?php echo $row['id_patient']; ?>">
       <div class="modal-body">
-        <form method="POST" action="crudPatient.php?id_patient=<?php echo $row['id_patient']; ?>">
-            <div class="form-group">
-                <label class="col-sm-2 col-form-label">Patient</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="name" value="<?php echo $row['name']; ?>">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 col-form-label">Age</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="age" value="<?php echo $row['age']; ?>">
-                </div>
-            </div>
-            <div class="form-group">
+        <div class="form-group">
+          <label>Nom</label>
+           <input type="text" class="form-control" name="name" value="<?php echo $row['name']; ?>">
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+           <input type="date" class="form-control" name="age" value="<?php echo $row['age']; ?>">
+        </div>
+        <div class="form-group">
             <div class="form-check">
             <input class="form-check-input" type="radio" name="sexe" value="<?php echo $row['sexe']; ?>" checked> homme
             <br>
             <input class="form-check-input" type="radio" name="sexe" value="<?php echo $row['sexe']; ?>" checked> femme
             </div>
         </div>
-
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button type="submit" name="edit" class="btn btn-primary">Modifier</a>
-        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" name="edit" class="btn btn-primary">Enregistrer</button>
       </div>
+    </form> 
     </div>
   </div>
 </div>
+
+
 
 
 

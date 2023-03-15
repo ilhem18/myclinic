@@ -54,9 +54,13 @@
                     <ul>
                         <input type="hidden" name="id_patient" value="<?php echo $_GET['id_patient'] ?>">
                         <li>Patient: <?php echo $row['name'] ?></li>
-                        <li>Âge:<?php echo $row['age'] ?></li>
+                        <li>Âge:<?php echo getAge($row['age']); ?></li>
                         <li>sexe:<?php echo $row['sexe'] ?></li>
                     </ul>
+                    <div class="top-right">
+            <!--<button type="submit"><a href="nv_consultation.php">Nouvelle consultation</a></button>-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ConsultationModal_<?php echo $row['id_patient']; ?>">Nouvelle consultation</buton>
+        </div>
                     </form>
                 <?php } }?>
                 </div>
@@ -111,14 +115,11 @@
             </div>
         </div>"; ?>
         <?php } ?>
-        <div class="top-right">
-            <!--<button type="submit"><a href="nv_consultation.php">Nouvelle consultation</a></button>-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ConsultationModal">Nouvelle consultation</buton>
-        </div>
+        
     </div>
 
 <!--Modal consultation + ordonnance-->
-<div class="modal fade" id="ConsultationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ConsultationModal_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -132,15 +133,24 @@
         <div class="form-row">
         <div class="form-group col-7">
             <label for="">Patient</label>
-            <input type="text" class="form-control" readonly>
+            <input type="text" class="form-control" value="<?php  echo $row['name'];?>" readonly>
         </div>
-        <div class="form-group col">
+        <div class="form-group col-7">
             <label for="">Age</label>
-            <input type="text" class="form-control" readonly>
+            <input type="text" class="form-control" value="<?php  
+            $dob= $row['age'];
+        function getAge($dob){
+            $bday= new DateTime($dob);
+            $today = new DateTime(date('d.m.y'));
+            $diff = $today->diff($bday);
+            return $diff->y; } ?>
+            <?php echo getAge($row['age']);?>
+       " readonly>
         </div>
-        <div class="form-group col">
+        <div class="form-group col-7">
             <label for="">Date</label>
-            <input type="date" class="form-control" readonly>
+            <input type="text" class="form-control" value="<?php date_default_timezone_set('Africa/Algiers');
+             echo date("d-m-y H:i:s");?>" readonly>
         </div>
         </div>
     </form>
