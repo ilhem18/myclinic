@@ -56,6 +56,7 @@
   <table id="data-table" class="table table-hover">
   <thead>
     <tr>
+      <th></th>
       <th scope="col">Nom</th>
       <th scope="col">Age</th>
       <th scope="col">Dernière consultation</th>    
@@ -65,7 +66,7 @@
   <tbody>
     <?php foreach ($resultat as $row) { ?>
     <tr>
-      <input type="hidden" class="id_patient" name="id_patient" value="<?php echo $row['id_patient']; ?>">
+      <td><input type="hidden" value="<?php echo $row['id_patient']; ?>"></td>
       <td scope="row"><?php echo $row['name'] ?></td>
       <td><?php echo $row['age'] ?></td>
       <td></td>
@@ -73,7 +74,7 @@
         <a href="infosPatient.php?id_patient=<?php echo $row['id_patient']; ?>" class="btn btn-primary"><i class="fa-solid fa-file" title="afficher"></i></a>
       </td>
       <td>
-        <button data-toggle="modal" data-target="#edit_<?php echo $row['id_patient']; ?>" class="btn btn-primary"><i class="fa-solid fa-file-pen" title="modifier"></i></button>
+        <button class="btn btn-primary editbtn"><i class="fa-solid fa-file-pen" title="modifier"></i></button>
       </td>
       <td>
         <a class="btn btn-primary" href="crudPatient.php?delete=<?php echo $row['id_patient']; ?>" ><i class="fa-solid fa-trash" title="supprimer"></i></a>
@@ -98,6 +99,7 @@
       </div>
     <form action="crudPatient.php" method="post" enctype="multipart/form-data">
       <div class="modal-body">
+      <input type="hidden" class="form-control" name="id_patient" id="id_patient">
         <div class="form-group">
           <label>Nom</label>
            <input type="text" class="form-control" name="name" >
@@ -125,7 +127,7 @@
 
 
 <!-- Edit -->
-<div class="modal fade" id="edit_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -134,27 +136,31 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-    <form method="POST" action="crudPatient.php?id_patient=<?php echo $row['id_patient']; ?>">
+    <form action="crudPatient.php" method="POST">
       <div class="modal-body">
+
+      <input type="hidden" name="update_id" id="update_id">
+
+
         <div class="form-group">
           <label>Nom</label>
-           <input type="text" class="form-control" name="name" value="<?php echo $row['name']; ?>">
+           <input type="text" class="form-control" name="name" id="name">
         </div>
         <div class="form-group">
           <label>Age</label>
-           <input type="date" class="form-control" name="age" value="<?php echo $row['age']; ?>">
+           <input type="date" class="form-control" name="age" id="age">
         </div>
         <div class="form-group">
             <div class="form-check">
-            <input class="form-check-input" type="radio" name="sexe" value="<?php echo $row['sexe']; ?>" checked> homme
+            <input class="form-check-input" type="radio" name="sexe" id="sexe" checked> homme
             <br>
-            <input class="form-check-input" type="radio" name="sexe" value="<?php echo $row['sexe']; ?>" checked> femme
+            <input class="form-check-input" type="radio" name="sexe" id="sexe" checked> femme
             </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="edit" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" name="updatedata" class="btn btn-primary">Enregistrer</button>
       </div>
     </form> 
     </div>
@@ -198,6 +204,25 @@
 </script>
 <!--search js ends-->
 
+<!--edit-->
+<script>
+  $(document).ready(function() {
+    $('.editbtn').on('click', function(){
+ 
+      $('#editModal').modal('show');
 
+      $tr = $(this).closest('tr');
+      var data = $tr.children("td").map(function(){
+        return $(this).text();
+      }).get();
+      console.log(data);
+
+      $('#update_id').val(data[0]);
+      $('#name').val(data[1]);
+      $('#age').val(data[2]);
+      $('#sexe').val(data[3]);
+    });
+  });
+</script>
 </body>
 </html>

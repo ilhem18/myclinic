@@ -30,8 +30,11 @@ if (isset($_GET['delete'])) {
 }
 
 
-if(isset($_POST['edit'])){
-	$id=$_GET['id_patient'];
+if(isset($_POST['updatedata'])){
+
+	$id=$_GET['update_id'];
+
+
 	$name= $_POST['name'];
 	$age= $_POST['age'];
 	$sexe=$_POST['sexe'];
