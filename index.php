@@ -66,7 +66,7 @@
   <tbody>
     <?php foreach ($resultat as $row) { ?>
     <tr>
-      <td><input type="hidden" value="<?php echo $row['id_patient']; ?>"></td>
+      <td><input type="hidden"><?php echo $row['id_patient']; ?></td>
       <td scope="row"><?php echo $row['name'] ?></td>
       <td><?php echo $row['age'] ?></td>
       <td></td>
@@ -141,7 +141,7 @@
 
       <input type="hidden" name="update_id" id="update_id">
 
-
+      
         <div class="form-group">
           <label>Nom</label>
            <input type="text" class="form-control" name="name" id="name">

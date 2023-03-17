@@ -32,7 +32,7 @@ if (isset($_GET['delete'])) {
 
 if(isset($_POST['updatedata'])){
 
-	$id=$_GET['update_id'];
+	$id=$_POST['update_id'];
 
 
 	$name= $_POST['name'];
