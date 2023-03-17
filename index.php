@@ -66,7 +66,7 @@
   <tbody>
     <?php foreach ($resultat as $row) { ?>
     <tr>
-      <td><input type="hidden"><?php echo $row['id_patient']; ?></td>
+      <td><?php echo $row['id_patient']; ?></td>
       <td scope="row"><?php echo $row['name'] ?></td>
       <td><?php echo $row['age'] ?></td>
       <td></td>
