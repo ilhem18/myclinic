@@ -59,7 +59,7 @@
                     </ul>
                     <div class="top-right">
             <!--<button type="submit"><a href="nv_consultation.php">Nouvelle consultation</a></button>-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ConsultationModal_<?php echo $row['id_patient']; ?>">Nouvelle consultation</buton>
+            <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_<?php echo $row['id_patient']; ?>">Nouvelle consultation</buton>
         </div>
                     </form>
                 <?php } }?>
@@ -119,7 +119,7 @@
     </div>
 
 <!--Modal consultation + ordonnance-->
-<div class="modal fade" id="ConsultationModal_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ConsultationModal_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -129,7 +129,7 @@
         </button>
       </div>
       <div class="modal-body">
-    <form method="GET">
+    <form method="POST" action="addMedication.php">
         <div class="form-row">
         <div class="form-group col-7">
             <label for="">Patient</label>
@@ -153,9 +153,8 @@
              echo date("d-m-y H:i:s");?>" readonly>
         </div>
         </div>
-    </form>
+
     <br>
-    <form>
         <div class="form-row">
         <div class="form-group col-7">
         <label>Diagnostique &nbsp;&nbsp;</label>
@@ -169,51 +168,34 @@
     </form>
     <br>
     <div class="ordonnance">
-        <table class="table">
+        <h4>Ordonnance</h4>
+        <table class="table" id="tbl">
         <thead>
-            <tr>
                 <th scope="col">Médicament</th>
                 <th scope="col">Posologie</th>
                 <th scope="col">Nbr d'unité</th>
                 <th scope="col">Qsp</th>
                 <th scope="col" colspan="2"></th>
-            </tr>
         </thead>
-        <?php 
-        require 'config.php';
-        $reload = mysqli_query($con, "SELECT * FROM medicament");
-        if(mysqli_num_rows($reload) > 0) {
-        ?>
-        <?php 
-        "<tbody>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th><button class='btn btn-primary'>supprimer</button></th>
-            <th><button class='btn btn-primary'>modifier</button></th>
-        </tr>
-        </tbody>";
-        ?>
-        <?php } ?>
+        <tbody>
+        </tbody>
         </table>
-    <form>
+    <form method="POST" name="sample">
         <div class="form-row">
         <div class="col">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="medicament">
         </div>
         <div class="col">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="posologie">
         </div>
         <div class="col">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="nbrunite">
         </div>
         <div class="col">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="qsp">
         </div>
         </div>
-        <button type="submit" name="ajout_medicament" class="btn btn-primary">+</button>
+        <button type="submit" name="ajout_medicament" class="btn btn-primary" onclick="addMedicament();">+</button>
     </form>
     </div>
       </div>
@@ -226,17 +208,35 @@
 </div>
 
 
-
-
-
-
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+    function addMedicament() {
+        var medicament = document.sample.medicament.value;
+        var posologie = document.sample.posologie.value;
+        var nbrunite = document.sample.nbrunite.value;
+        var qsp = document.sample.qsp.value;
+
+        var tr = document.createElement('tr');
+
+        var td1 = tr.appendChild(document.createElement('td'));
+        var td2 = tr.appendChild(document.createElement('td'));
+        var td3 = tr.appendChild(document.createElement('td'));
+        var td4 = tr.appendChild(document.createElement('td'));
+
+        td1.innerHTML= medicament;
+        td2.innerHTML= posologie;
+        td3.innerHTML= nbrunite;
+        td4.innerHTML= qsp;
+
+        document.getElementById("tbl").appendChild(tr);
+    }
+</script>
+
+
+
 </body>
 
 </html>
