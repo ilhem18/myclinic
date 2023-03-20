@@ -78,7 +78,8 @@ body{
 .wrapper .main_content .info ul li{
    margin-top: 10px;
 }
-.wrapper .top-right button{
+
+.wrapper .top-right a{
     float: right;
     margin-top: 20px;
     border: none;
@@ -87,8 +88,6 @@ body{
     padding: 20px 50px;
     margin-right: 25px;
     border-radius: 20px;
-}
-.wrapper .top-right button a{
     color: #f3f5f9;
 }
 .wrapper .top-right button a:hover{

@@ -58,8 +58,8 @@
                         <li>sexe:<?php echo $row['sexe'] ?></li>
                     </ul>
                     <div class="top-right">
-            <!--<button type="submit"><a href="nv_consultation.php">Nouvelle consultation</a></button>-->
-            <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_<?php echo $row['id_patient']; ?>">Nouvelle consultation</buton>
+            <a class="btn btn-primary" href="nv_consultation.php?id_patient=<?php echo $row['id_patient']; ?>">Nouvelle consultation</a>
+            <!--<button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_">Nouvelle consultation</buton>-->
         </div>
                     </form>
                 <?php } }?>
