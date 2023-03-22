@@ -250,7 +250,7 @@
     function data(){
         a++;
         var input = document.createElement("div");
-        var dtd = '<div>Delete</div>';
+        var dtd = '<button>Delete</button>';
         input.innerHTML = document.getElementById('subinputs').innerHTML + dtd;
         document.getElementById("main").append(input);
     }

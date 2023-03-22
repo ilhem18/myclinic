@@ -58,8 +58,8 @@
                         <li>sexe:<?php echo $row['sexe'] ?></li>
                     </ul>
                     <div class="top-right">
-            <a class="btn btn-primary" href="nv_consultation.php?id_patient=<?php echo $row['id_patient']; ?>">Nouvelle consultation</a>
-            <!--<button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_">Nouvelle consultation</buton>-->
+            <!--<a class="btn btn-primary" href="nv_consultation.php?id_patient=">Nouvelle consultation</a>-->
+            <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_<?php echo $row['id_patient']; ?>">Nouvelle consultation</buton>
         </div>
                     </form>
                 <?php } }?>
@@ -129,15 +129,15 @@
         </button>
       </div>
       <div class="modal-body">
-    <form method="POST" action="addMedication.php">
+    <form action="addMedication.php" method="POST">
         <div class="form-row">
         <div class="form-group col-7">
             <label for="">Patient</label>
-            <input type="text" class="form-control" value="<?php  echo $row['name'];?>" readonly>
+            <input type="text" class="form-control" name="name" value="<?php  echo $row['name'];?>" readonly>
         </div>
         <div class="form-group col-7">
             <label for="">Age</label>
-            <input type="text" class="form-control" value="<?php  
+            <input type="text" class="form-control" name="age" value="<?php  
             $dob= $row['age'];
         function getAge($dob){
             $bday= new DateTime($dob);
@@ -149,23 +149,23 @@
         </div>
         <div class="form-group col-7">
             <label for="">Date</label>
-            <input type="text" class="form-control" value="<?php date_default_timezone_set('Africa/Algiers');
+            <input type="text" class="form-control" name="date" value="<?php date_default_timezone_set('Africa/Algiers');
              echo date("d-m-y H:i:s");?>" readonly>
         </div>
         </div>
 
     <br>
         <div class="form-row">
+            <input type="hidden" name="id_consultation">
         <div class="form-group col-7">
         <label>Diagnostique &nbsp;&nbsp;</label>
-        <input type="text" class="form-control">
+        <input type="text" name="diagnostique" class="form-control">
         </div>
         <div class="form-group col">
         <label>Remarques &nbsp;&nbsp;</label>
-        <textarea class="form-control"></textarea>
+        <textarea name="remarque" class="form-control"></textarea>
         </div>
         </div>
-    </form>
     <br>
     <div class="ordonnance">
         <h4>Ordonnance</h4>
@@ -180,29 +180,50 @@
         <tbody>
         </tbody>
         </table>
-    <form method="POST" name="sample">
-        <div class="form-row">
-        <div class="col">
-        <input type="text" class="form-control" name="medicament">
+        <div id="main">
+            <div class="form-row">
+                <div class="col">
+                <input type="text" class="form-control" placeholder="Médicament" name="medicament">
+                </div>
+                <div class="col">
+                <input type="text" class="form-control" placeholder="Posologie" name="posologie">
+                </div>
+                <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite">
+                </div>
+                <div class="col">
+                <input type="text" class="form-control" placeholder="QSP" name="qsp">
+                </div>
+                <div id="ss">
+                <a href="javascript:data()" type="submit" class="btn btn-primary add">+</a>
+                </div>
+                </div>
+                
         </div>
-        <div class="col">
-        <input type="text" class="form-control" name="posologie">
         </div>
-        <div class="col">
-        <input type="text" class="form-control" name="nbrunite">
-        </div>
-        <div class="col">
-        <input type="text" class="form-control" name="qsp">
-        </div>
-        </div>
-        <button type="submit" name="ajout_medicament" class="btn btn-primary" onclick="addMedicament();">+</button>
-    </form>
-    </div>
       </div>
+      <div id="subinputs" style="display: none">
+                <div class="form-row">
+                <div class="col">
+                <input type="text" class="form-control" placeholder="Médicament" name="medicament">
+                </div>
+                <div class="col">
+                <input type="text" class="form-control" placeholder="Posologie" name="posologie">
+                </div>
+                <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite">
+                </div>
+                <div class="col">
+                <input type="text" class="form-control" placeholder="QSP" name="qsp">
+                </div>
+                </div>
+        </div>
+   
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Aperçu</button>
+        <button type="button" class="btn btn-primary" name="add_btn">Sauvegarder</button>
       </div>
+    </form>  
     </div>
   </div>
 </div>
@@ -232,6 +253,16 @@
         td4.innerHTML= qsp;
 
         document.getElementById("tbl").appendChild(tr);
+    }
+</script>
+<script>
+    var a=1;
+    function data(){
+        a++;
+        var input = document.createElement("div");
+        /*var dtd = '<button class="btn btn-primary"><i class="fa-solid fa-trash"></button>';*/
+        input.innerHTML = document.getElementById('subinputs').innerHTML;
+        document.getElementById("main").append(input);
     }
 </script>
 
