@@ -38,20 +38,19 @@ if(isset($_POST['add_btn']) && isset($_POST['id_patient'])){
             
             // Insert medication details into the `medicament_patient` table
             foreach ($medications as $index => $medication) {
-            $posologie = mysqli_real_escape_string($con, $medication['posologie']);
-            $nbrunite = mysqli_real_escape_string($con, $medication['nbrunite']);
-            $qsp = mysqli_real_escape_string($con, $medication['qsp']);
-            $medicationId = $medicationIds[$index]; // Use the index to retrieve the corresponding medication ID
-
-    $insertQuery = "INSERT INTO medicament_patient (id_ordonnance, id_medication, posologie, qsp, nbrunite) VALUES ('$prescription_id', '$medicationId', '$posologie', '$qsp', '$nbrunite')";
-    $insertResult = mysqli_query($con, $insertQuery);
-    if (!$insertResult) {
-        echo "Error inserting medication details: " . mysqli_error($con);
-    } else {
-        header("Location: index.php");
-    }
-}
-
+                $posologie = mysqli_real_escape_string($con, $medication['posologie']);
+                $nbrunite = mysqli_real_escape_string($con, $medication['nbrunite']);
+                $qsp = mysqli_real_escape_string($con, $medication['qsp']);
+                $medicationId = $medicationIds[$index];
+            
+                $insertQuery = "INSERT INTO medicament_patient (id_ordonnance, id_medication, posologie, qsp, nbrunite) VALUES ('$prescription_id', '$medicationId', '$posologie', '$qsp', '$nbrunite')";
+                $insertResult = mysqli_query($con, $insertQuery);
+                if (!$insertResult) {
+                    echo "Error inserting medication details: " . mysqli_error($con);
+                } else {
+                    header("Location: index.php");
+                }
+            }
             
             
 
