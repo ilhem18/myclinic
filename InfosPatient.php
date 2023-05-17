@@ -58,8 +58,8 @@
                         <li>sexe:<?php echo $row['sexe'] ?></li>
                     </ul>
                     <div class="top-right">
-            <!--<a class="btn btn-primary" href="nv_consultation.php?id_patient=">Nouvelle consultation</a>-->
-            <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_<?php echo $row['id_patient']; ?>">Nouvelle consultation</buton>
+            <a class="btn btn-primary" href="nv_consultation.php?id_patient=<?php echo $row['id_patient']; ?>">Nouvelle consultation</a>
+            <!--<button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_">Nouvelle consultation</buton>-->
         </div>
                     </form>
                 <?php } }?>
@@ -90,7 +90,8 @@
             <?php 
             require 'config.php';
             $count = mysqli_query($con, "SELECT * FROM ordonnance");
-            if(mysqli_num_rows($count) > 0) { ?>
+            if(mysqli_num_rows($count) > 0) { 
+                foreach($count as $row)?>
             <?php 
             "<div class='Ordonnance'>
                 <h2>Ordonnance 11/01/2023</h2>
@@ -105,10 +106,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>"?><?php echo $row['medication_name'] ?><?php"</th>
+                            <th>"?><?php echo $row['posologie'] ?><?php"</th>
+                            <th>"?><?php echo $row['nbrUnite'] ?><?php"</th>
+                            <th>"?><?php echo $row['qsp'] ?><?php"</th>
                         </tr>
                     </tbody>
                 </table>
@@ -221,7 +222,7 @@
    
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="add_btn">Sauvegarder</button>
+        <button type="button" class="btn btn-primary" id="add_btn" name="add_btn">Sauvegarder</button>
       </div>
     </form>  
     </div>

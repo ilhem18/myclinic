@@ -1,0 +1,95 @@
+
+
+
+<form action="../subs/custompcorder2.php/" method="post" id="form">
+
+            <p><input id="name" name="part_id[]"/> 
+               <input type="text"  id="quantity" name="quantity[]"/>  
+               <input id="name-data" type="text" name="price[]"/></p>
+
+            <p><input id="name" name="part_id[]"/> 
+               <input type="text" id="quantity" name="quantity[]"/>  
+               <input id="name-data" type="text" name="price[]"/></p>
+
+            <p><input id="name" name="part_id[]"/> 
+               <input type="text" id="quantity" name="quantity[]"/> 
+               <input id="name-data" type="text" name="price[]"/></p>
+
+            <p><input id="name" name="part_id[]"/> 
+               <input type="text" id="quantity" name="quantity[]"/> 
+               <input id="name-data" type="text" name="price[]"/></p>   
+
+
+    <input id="submit" type="submit" value="Submit Order" name="submission"/>
+</form>
+
+
+
+include '../db/connect.php';
+
+
+foreach (array('part_id', 'quantity', 'price') as $pos) {
+foreach ($_POST[$pos] as $id => $row) {
+    $_POST[$pos][$id] = mysqli_real_escape_string($con, $row);
+}
+}
+
+$ids = $_POST['part_id'];
+$quantities = $_POST['quantity'];
+$prices =  $_POST['price'];
+
+$items = array();
+
+$size = count($ids);
+
+for($i = 0 ; $i < $size ; $i++){
+// Check for part id
+if (empty($ids[$i]) || empty($quantities[$i]) || empty($prices[$i])) {
+    continue;
+}
+$items[]=array(
+    "part_id"     => $ids[$i], 
+    "quantity"    => $quantities[$i],
+    "price"       => $prices[$i]
+);
+}
+
+if (!empty($items)) {
+$values = array();
+foreach($items as $item){
+    $values[] = "('{$item['part_id']}', '{$item['quantity']}', '{$item['price']}')";
+}
+
+$values = implode(", ", $values);
+
+$sql = "INSERT INTO oz2ts_custompc_details (part_id, quantity, price) VALUES     {$values}    ;
+" ;
+$result = mysqli_query($con, $sql );
+if ($result) {
+    echo 'Successful inserts: ' . mysqli_affected_rows($con);
+} else {
+    echo 'query failed: ' . mysqli_error($con);  
+
+}
+}
+
+?> 
+
+INSERT INTO orders ( userid, timestamp) 
+SELECT o.userid , o.timestamp FROM users u INNER JOIN orders o ON  o.userid = u.id
+
+INSERT INTO medicament (visit_id, medication_name,posologie, nbrunite, qsp)
+SELECT m.visit_id FROM consultation c INNER JOIN medicament m ON m.visit_id = c.id_consultation;
+
+
+$array = array("array", "with", "about", "2000", "values");
+$query = "INSERT INTO table (link) VALUES (?)";
+$stmt = $mysqli->prepare($query);
+$stmt ->bind_param("s", $one);
+
+$mysqli->query("START TRANSACTION");
+foreach ($array as $one) {
+    $stmt->execute();
+}
+$stmt->close();
+$mysqli->query("COMMIT");

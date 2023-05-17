@@ -144,7 +144,7 @@
         <div class="main_content">
             <div class="header">
                 <h2>Général</h2>
-                <form>
+                <form action="addMedication.php" method="POST">
                 <?php 
                          require 'config.php';
                          if (isset($_GET['id_patient'])) {
@@ -154,11 +154,12 @@
 
                         foreach ($show as $row) { ?>
                     <div class="form-row">
+                        <input type="hidden" name="id_patient" id="id_patient" value="<?php echo $row['id_patient']; ?>">
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" value="<?php echo $row['name'] ?>" readonly>
+                            <input type="text" class="form-control" name="name" id="name" value="<?php echo $row['name']; ?>" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" value ="<?php  
+                            <input type="text" class="form-control" name="age" id="age" value ="<?php  
                                                                             $dob= $row['age'];
                                                                             function getAge($dob){
                                                                             $bday= new DateTime($dob);
@@ -168,92 +169,78 @@
                             <?php echo getAge($row['age']); ?>" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                         <input type="text" class="form-control" value="<?php date_default_timezone_set('Africa/Algiers');
+                         <input type="text" class="form-control" name="date" id="date" value="<?php date_default_timezone_set('Africa/Algiers');
                              echo date("d-m-y H:i:s");?>" readonly>
                         </div>
+                        <input type="hidden" name="id_consultation" id="id_consultation">
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" placeholder="Motif">
+                            <input type="text" class="form-control" name="motif" id="motif"  placeholder="Motif">
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" placeholder="Diagnostique">
+                            <input type="text" class="form-control" name="remarque" id="remarque"  placeholder="Remarques">
                         </div>
                     </div>
-                </form>
                 <?php }} ?>
             </div>
             <div class="dossier_medical">
             <div class="ordonnance">
                 <h4>Ordonnance</h4>
-                <!--<table class="table" id="tbl">
-                <thead>
-                <th scope="col">Médicament</th>
-                <th scope="col">Posologie</th>
-                <th scope="col">Nbr d'unité</th>
-                <th scope="col">Qsp</th>
-                <th scope="col" colspan="2"></th>
-                </thead>
-                <tbody>
-                </tbody>
-                </table>-->
-            <form method="POST" class="for">
-            <div id="main">
-                <div class="form-row">
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="medicament">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="posologie">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="qsp">
-                </div>
-                </div>
-                <div id="ss">
-                <a href="javascript:data()" type="submit" class="btn btn-primary add">+</a>
-                </div>
+                <input type="hidden" name="id_ordonnance" id="id_ordonnance">
+                <div class="form-group">
+    <label for="medications">Médicaments</label>
+    <div id="medications">
+        <div class="row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Médicament" name="medications[0][med_name]">
             </div>
-            </form>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Posologie" name="medications[0][posologie]">
             </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre d'unités" name="medications[0][nbrunite]">
             </div>
-            <div class="top-right">
-                <button><a href="">Sauvegarder</a></button>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="QSP" name="medications[0][qsp]">
             </div>
         </div>
     </div>
-
-    <div id="subinputs" style="display: none">
-                <div class="form-row">
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="medicament">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="posologie">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="qsp">
-                </div>
-                </div>
+    <button type="button" class="btn btn-primary mt-2" onclick="addMedication()">Ajouter un médicament</button>
+</div>
             </div>
-
+            </div>
+            <div class="top-right">
+                <button name="add_btn">Sauvegarder</a></button>
+            </div>
+        </div>
+    </div>
+    </form>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script>
-    var a=1;
-    function data(){
-        a++;
-        var input = document.createElement("div");
-        var dtd = '<button>Delete</button>';
-        input.innerHTML = document.getElementById('subinputs').innerHTML + dtd;
-        document.getElementById("main").append(input);
-    }
+  let medicationCount = 1;
+
+function addMedication() {
+    medicationCount++;
+    let medication = `
+        <div class="row mt-2">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Médicament" name="medications[${medicationCount}][med_name]">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Posologie" name="medications[${medicationCount}][posologie]">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Nombre d'unités" name="medications[${medicationCount}][nbrunite]">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="QSP" name="medications[${medicationCount}][qsp]">
+            </div>
+        </div>
+    `;
+    document.getElementById('medications').insertAdjacentHTML('beforeend', medication);
+}
 
 </script>
 

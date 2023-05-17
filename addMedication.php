@@ -1,49 +1,97 @@
 <?php 
 require 'config.php';
 
-if(isset($_POST['add_btn'])){
-    $id_patient=$_GET['id_patient'];
-    $date=$_POST['date'];
+if(isset($_POST['add_btn']) && isset($_POST['id_patient'])){
+    $id_patient = $_POST['id_patient'];
 
-    $consultation=$_POST['id_consultation'];
-    $diagnostique=$_POST['diagnostique'];
+    $diagnostique=$_POST['motif'];
     $remarque=$_POST['remarque'];
 
-    for($i=0;$i<count($_POST['main']);$i++){
-        $med=$_POST['medicament'][$i];
-        $poso=$_POST['posologie'][$i];
-        $nbrun=$_POST['nbrunite'][$i];
-        $q=$_POST['qsp'][$i];
+   
+    
 
-        $dataarray=array(
-            'medicament'=>$med,
-            'posologie'=>$poso,
-            'nbrunite'=>$nbrun,
-            'qsp'=>$q
-        );
-        if(is_array($dataarray)){
-            foreach($dataarray as $row){
-                $medicament=mysqli_real_escape_string($con,$row['medicament']);
-                $posologie=mysqli_real_escape_string($con,$row['posologie']);
-                $nbrunite=mysqli_real_escape_string($con,$row['nbrunite']);
-                $qsp=mysqli_real_escape_string($con,$row['qsp']);
+	$run = mysqli_query($con, "INSERT INTO consultation(patient_id,	visit_date,	diagnosis,	remarques) VALUES ('$id_patient',  CURRENT_TIMESTAMP, '$diagnostique','$remarque')");
+        $id_consultation = mysqli_insert_id($con);    
+      
+        $ordo=mysqli_query($con, "INSERT INTO ordonnance(visit_id) VALUES ('$id_consultation')");
+            $prescription_id = mysqli_insert_id($con);
+           
+        
+            $medications = $_POST['medications'];
 
-                $insordonnance=mysqli_query($con, "INSERT INTO medicament(medication_name, visit_id, posologie, nbrUnite, qsp) VALUES(' $medicament ','$consultation', '$posologie', '$nbrunite', '$qsp')");
+            // Iterate over the medications and insert medication names into the `medication` table
+            $medicationIds = array();
+            foreach ($medications as $medication) {
+                $medicationName = mysqli_real_escape_string($con, $medication['med_name']);
                 
-                if($insordonnance==1){
-                $insconsultation=mysqli_query($con,"INSERT INTO consultation(patient_id, visit_date, diagnosis,	remarques,	prescription) VALUES('$id_patient', '$date',  '$diagnostique', '$remarque', '$dataarray')");
-                    echo "consultation et ordonnance ajouté";
-                    header("Location: index.php");
+                // Insert the medication name into the `medication` table
+                $insertQuery = "INSERT INTO medicament (medication_name) VALUES ('$medicationName')";
+                $insertResult = mysqli_query($con, $insertQuery);
+                if ($insertResult) {
+                    // Retrieve the inserted medication's id_medication
+                    $medicationId = mysqli_insert_id($con);
+                    $medicationIds[] = $medicationId;
                 } else {
-                    echo "erreur";
+                    echo "Error inserting medication: " . mysqli_error($con);
                 }
             }
-        } else {
-            echo "c'est pas une array";
-        }
+            
+            // Insert medication details into the `medicament_patient` table
+            foreach ($medications as $index => $medication) {
+            $posologie = mysqli_real_escape_string($con, $medication['posologie']);
+            $nbrunite = mysqli_real_escape_string($con, $medication['nbrunite']);
+            $qsp = mysqli_real_escape_string($con, $medication['qsp']);
+            $medicationId = $medicationIds[$index]; // Use the index to retrieve the corresponding medication ID
 
+    $insertQuery = "INSERT INTO medicament_patient (id_ordonnance, id_medication, posologie, qsp, nbrunite) VALUES ('$prescription_id', '$medicationId', '$posologie', '$qsp', '$nbrunite')";
+    $insertResult = mysqli_query($con, $insertQuery);
+    if (!$insertResult) {
+        echo "Error inserting medication details: " . mysqli_error($con);
+    } else {
+        header("Location: index.php");
     }
-    
 }
 
+            
+            
+
+            
+    }
+
+
+
+
+
+
+
+
+
+
+
+ /*get the IDs of the selected medications 
+            $medications = $_POST['medications'];   
+            
+       
+            //insert each medication into the patient_medication table
+            foreach($medications as $medication){
+                $medication_name = mysqli_real_escape_string($con, $medication['med_name']);
+                $posologie = mysqli_real_escape_string($con, $medication['posologie']);
+                $nbrunite = mysqli_real_escape_string($con, $medication['nbrunite']);
+                $qsp = mysqli_real_escape_string($con, $medication['qsp']);
+            
+               /*for($i=0; $i<count($medication_names); $i++){
+                $medication_name = $medication_names[$i];
+                $posologie = $posologies[$i];
+                $nbrunite = $nbrunites[$i];
+                $qsp = $qsps[$i]; }
+
+                $liste_medicament=mysqli_query($con, "INSERT INTO medicament_patient(id_ordonnance, med_name, posologie, qsp, nbrunite) VALUES ('$prescription_id', '$medication_name', '$posologie', '$qsp', '$nbrunite')");
+
+
+              
+            }*/
+
+
 ?>
+
+
