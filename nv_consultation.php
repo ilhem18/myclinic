@@ -191,16 +191,16 @@
     <div id="medications">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="medications[0][med_name]">
+                <input type="text" class="form-control" placeholder="Médicament" name="med_name[]">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="medications[0][posologie]">
+                <input type="text" class="form-control" placeholder="Posologie" name="posologie[]">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="medications[0][nbrunite]">
+                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite[]">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="medications[0][qsp]">
+                <input type="text" class="form-control" placeholder="QSP" name="qsp[]">
             </div>
         </div>
     </div>
@@ -226,16 +226,16 @@ function addMedication() {
     let medication = `
         <div class="row mt-2">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="medications[${medicationCount}][med_name]">
+                <input type="text" class="form-control" placeholder="Médicament" name="med_name[]">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="medications[${medicationCount}][posologie]">
+                <input type="text" class="form-control" placeholder="Posologie" name="posologie[]">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="medications[${medicationCount}][nbrunite]">
+                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite[]">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="medications[${medicationCount}][qsp]">
+                <input type="text" class="form-control" placeholder="QSP" name="qsp[]">
             </div>
         </div>
     `;
