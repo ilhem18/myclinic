@@ -12,27 +12,16 @@ if(isset($_POST['add_btn']) && isset($_POST['id_patient'])){
 
 	$run = mysqli_query($con, "INSERT INTO consultation(patient_id,	visit_date,	diagnosis,	remarques) VALUES ('$id_patient',  CURRENT_TIMESTAMP, '$diagnostique','$remarque')");
         $id_consultation = mysqli_insert_id($con);    
-      
-        $ordo=mysqli_query($con, "INSERT INTO ordonnance(visit_id) VALUES ('$id_consultation')");
-            $prescription_id = mysqli_insert_id($con);
-           
-        
-           //loop through the medication inputs and inserrt into the medication table
-           $nameMeds = $_POST['med_name'];
-           $posologies = $_POST['posologie'];
-           $qspValues = $_POST['qsp'];
-           $nbrUnites= $_POST['nbrunite'];
 
-           for($i = 0; $i < count($nameMeds); $i++){
-            $nameMed = $nameMeds[$i];
-            $posologie = $posologies[$i];
-            $qsp = $qspValues[$i];
-            $nbrUnite = $nbrUnites[$i];
-           }
-           $liste_medicament=mysqli_query($con, "INSERT INTO medicament_patient(id_ordonnance, med_name, posologie, qsp, nbrunite)
-            VALUES ('$prescription_id', '$nameMed', '$posologie', '$qsp', '$nbrUnite')");
+        /*afficher la date de la derniere consultation
+        $derniere_consultation= "SELECT visit_date FROM consultation WHERE id_consultation='$id_consultation'";
+        $resultat=mysqli_query($con,$derniere_consultation);*/
 
-        if($liste_medicament){
+          
+        $listeMedications=$_POST['textarea_data'];
+        $ordo=mysqli_query($con, "INSERT INTO ordonnance(visit_id, listeMedications) VALUES ('$id_consultation','$listeMedications')");
+            //$prescription_id = mysqli_insert_id($con);
+        if($ordo){
             header("Location: index.php");
         }
             

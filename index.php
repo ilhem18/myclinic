@@ -58,8 +58,7 @@
     <tr>
       <th></th>
       <th scope="col">Nom</th>
-      <th scope="col">Age</th>
-      <th scope="col">Dernière consultation</th>    
+      <th scope="col">Age</th>   
       <th scope="col" colspan="3"></th>
     </tr>
   </thead>
@@ -69,7 +68,6 @@
       <td><?php echo $row['id_patient']; ?></td>
       <td scope="row"><?php echo $row['name'] ?></td>
       <td><?php echo $row['age'] ?></td>
-      <td></td>
       <td>
         <a href="infosPatient.php?id_patient=<?php echo $row['id_patient']; ?>" class="btn btn-primary"><i class="fa-solid fa-file" title="afficher"></i></a>
       </td>

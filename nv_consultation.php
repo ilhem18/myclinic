@@ -129,6 +129,10 @@
             align-items: center;
             cursor: pointer;
         }
+        .delete-button {
+        font-size: 14px; /* Adjust the font-size value to make the button smaller */
+        padding: 0; /* Adjust the padding values to resize the button accordingly */
+    }
     </style>
 </head>
 
@@ -187,24 +191,12 @@
                 <h4>Ordonnance</h4>
                 <input type="hidden" name="id_ordonnance" id="id_ordonnance">
                 <div class="form-group">
-    <label for="medications">Médicaments</label>
-    <div id="medications">
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="med_name[]">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="posologie[]">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite[]">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="qsp[]">
-            </div>
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary mt-2" onclick="addMedication()">Ajouter un médicament</button>
+   
+    
+        
+        <textarea name="textarea_data" rows="5" cols="100"></textarea>
+        
+   
 </div>
             </div>
             </div>
@@ -219,27 +211,61 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script>
-  let medicationCount = 1;
-
+ 
 function addMedication() {
-    medicationCount++;
-    let medication = `
-        <div class="row mt-2">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="med_name[]">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="posologie[]">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite[]">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="qsp[]">
-            </div>
-        </div>
-    `;
-    document.getElementById('medications').insertAdjacentHTML('beforeend', medication);
+    
+    var medicationsContainer = document.querySelector('[name="medications[]"]');
+    
+    // Create a new medication row
+    var row = document.createElement('div');
+    row.classList.add('row');
+
+    // Create medication name field
+    var medNameCol = document.createElement('div');
+    medNameCol.classList.add('col');
+    var medNameInput = document.createElement('input');
+    medNameInput.type = 'text';
+    medNameInput.classList.add('form-control');
+    medNameInput.placeholder = 'Médicament';
+    medNameInput.name = 'medications[med_name]';
+    medNameCol.appendChild(medNameInput);
+    row.appendChild(medNameCol);
+
+    // Create posologie field
+    var posologieCol = document.createElement('div');
+    posologieCol.classList.add('col');
+    var posologieInput = document.createElement('input');
+    posologieInput.type = 'text';
+    posologieInput.classList.add('form-control');
+    posologieInput.placeholder = 'Posologie';
+    posologieInput.name = 'medications[posologie]';
+    posologieCol.appendChild(posologieInput);
+    row.appendChild(posologieCol);
+
+    // Create nombre d'unités field
+    var nbruniteCol = document.createElement('div');
+    nbruniteCol.classList.add('col');
+    var nbruniteInput = document.createElement('input');
+    nbruniteInput.type = 'text';
+    nbruniteInput.classList.add('form-control');
+    nbruniteInput.placeholder = "Nombre d'unités";
+    nbruniteInput.name = 'medications[nbrunite]';
+    nbruniteCol.appendChild(nbruniteInput);
+    row.appendChild(nbruniteCol);
+
+    // Create QSP field
+    var qspCol = document.createElement('div');
+    qspCol.classList.add('col');
+    var qspInput = document.createElement('input');
+    qspInput.type = 'text';
+    qspInput.classList.add('form-control');
+    qspInput.placeholder = 'QSP';
+    qspInput.name = 'medications[qsp]';
+    qspCol.appendChild(qspInput);
+    row.appendChild(qspCol);
+
+    // Append the new medication row to the container
+    medicationsContainer.appendChild(row);
 }
 
 </script>

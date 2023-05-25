@@ -64,60 +64,77 @@
                     </form>
                 <?php } }?>
                 </div>
+
+
+
+            <!--LISTE DE CONSULTATIONS-->
                 <?php
                 require 'config.php';
-                $count = mysqli_query($con, "SELECT * FROM consultation");
-                if(mysqli_num_rows($count) > 0) { ?>
-                <?php
-                "<div class='derniere-consultation'>
-                    <a href=''>11/01/2023</a>
-                </div>
+                $id_patient=$_GET['id_patient'];
+                $patient_consultation = mysqli_query($con, "SELECT c.visit_date, c.diagnosis, c.remarques FROM consultation c
+                JOIN patient p ON c.patient_id=p.id_patient WHERE p.id_patient=$id_patient"); ?>
+                
+                  <?php  foreach($patient_consultation as $data) { ?> 
+                <!--<div class="derniere-consultation">
+                    <a href=""></a>
+                </div>-->
             </div>
         </div>
-        <div class='dossier_medical'>
+        <div class="dossier_medical">
             <div class='consultation_motif'>
-                <h2>Consultation 11/01/2023</h2>
+                <h2>Consultation <?php echo $data['visit_date'] ?></h2>
                 <ul>
-                    <li>Motif: </li>
-                    <li>Diagnostique médical: </li>
-                    <li>Poids: </li>
-                    <li>Taille: </li>
-                    <li>Température: </li>
-                    <li>Fréquence cardiaque: </li>
-                    <li>pression artérielle: </li>
+                    <li>Diagnostique médical: <?php echo $data['diagnosis'] ?></li>
+                    <li>Remarques: <?php echo $data['remarques'] ?></li>
                 </ul>
-            </div>"; }?>
+            </div> <?php } ?>
             <?php 
             require 'config.php';
-            $count = mysqli_query($con, "SELECT * FROM ordonnance");
+            $id_patient=$_GET['id_patient'];
+            $count = mysqli_query($con, "SELECT o.listeMedications FROM ordonnance o
+            JOIN consultation c ON o.visit_id=c.id_consultation
+            JOIN patient p ON c.patient_id=p.id_patient 
+            WHERE p.id_patient = $id_patient");
             if(mysqli_num_rows($count) > 0) { 
                 foreach($count as $row)?>
-            <?php 
-            "<div class='Ordonnance'>
-                <h2>Ordonnance 11/01/2023</h2>
+            
+            <div class='Ordonnance'>
+                <h2>Ordonnance</h2>
                 <table class='table'>
                     <thead class='thead-light'>
                         <tr>
                             <th scope='col'>Médicament</th>
-                            <th scope='col'>Posologie</th>
-                            <th scope='col'>Nbr d'unité</th>
-                            <th scope='col'>Qsp</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th>"?><?php echo $row['medication_name'] ?><?php"</th>
-                            <th>"?><?php echo $row['posologie'] ?><?php"</th>
-                            <th>"?><?php echo $row['nbrUnite'] ?><?php"</th>
-                            <th>"?><?php echo $row['qsp'] ?><?php"</th>
+                            <th><?php echo $row['listeMedications'] ?></th>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>"; ?>
+        </div>
         <?php } ?>
         
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--Modal consultation + ordonnance-->
 <div class="modal fade" id="ConsultationModal_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
