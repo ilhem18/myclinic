@@ -7,50 +7,13 @@
     text-decoration: none;
 }
 body{
-    background: #f3f5f9;
-}
-.wrapper{
-    display: flex;
-    position: relative;
-}
-.wrapper .sidebar{
-    position: fixed;
-    width: 200px;
-    height: 100%;
-    background: #93bfd4;
-    padding: 30px 0;
-}
-.wrapper .sidebar h2{
-    color: #fff;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 100px;
-}
-.wrapper .sidebar ul li{
-    padding: 15px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    border-top: 1px solid rgba(225,255,255,0.05);
-}
-.wrapper .sidebar ul li a{
-    color: #030611ce;
-    font-size: 18px;
-    display: block;
-}
-.wrapper .sidebar ul li:hover{
-    background: rgb(56, 79, 133);
-}
-.wrapper .sidebar ul li:hover a{
-    color: #fff;
-    /*color: rgb(3, 3, 3);*/
-    text-decoration: none;
-}
-.wrapper .main_content{
-    width: 100%;
-    margin-left: 200px;
+    background: #020f2b;
 }
 
+
+
 .wrapper .main_content .header{
-    width: 350px;
+    width: 150px;
     height: 100%;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -99,9 +62,9 @@ body{
     border-radius: 20%;
 }*/
 .wrapper .dossier_medical{
-    width: 100%;
+    width: 80% !important;
     margin-top: 50px;
-    left: 0;
+    margin-right: 50px;
 }
 .wrapper .dossier_medical .consultation_motif h2, .wrapper .dossier_medical .Ordonnance h2{
     padding: 20px;

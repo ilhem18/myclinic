@@ -37,8 +37,6 @@ if(isset($_POST['add_btn']) && isset($_POST['id_patient'])){
 
 
 
-
-
  /*get the IDs of the selected medications 
             $medications = $_POST['medications'];   
             

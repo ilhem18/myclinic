@@ -10,7 +10,6 @@
       header("Location: login.php");
     }
 
-
 ?>
 
 <html lang="en">
@@ -18,28 +17,83 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informations sur le patient</title>
-    <!--CSS bootstrap-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <!--CSS bootstrap-->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo_myclinic (1).png">
     <script src="https://kit.fontawesome.com/8fc5187318.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="infosPatient.css">
+    <title>Informations sur le patient</title>
+   <style>
+    body{
+        background: #E8F0F2;
+    }
+    .title h2{
+        color: #020f2b;
+        text-transform: uppercase;
+        margin-left: 20px;
+        font-size:40px;
+    }
+    nav{
+        padding: 10px 20px;
+    }
+    .table-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        
+        /*height: 100%;*/
+    }
+
+    .dossier_medical {
+        margin-left: 50px; /* Adjust the value as needed */
+        width: 50%;
+    }
+    .dossier_medical h2{
+        padding-bottom: 15px;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+    .info {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        /*background: #020f2b;
+        color: #fff;*/
+    }
+    .info ul {
+        list-style: none;
+        padding: 50px;
+        margin-right: 80px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 25px;
+    }
+
+    .info ul li {
+        margin-right: 20px; /* Adjust the value as needed */
+    }
+    
+   </style>
 
 </head>
 
 <body>
-
-    <div class="wrapper">
-        <div class="sidebar">
-            <h2>MyClinic</h2>
-            <ul>
-                <li><a href="index.php"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Accueil</a></li>
-                <li><a href="index.php?logout='1'"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Se déconnecter</a></li>
-            </ul>
-        </div>
-        <div class="main_content">
-            <div class="header">
-                <h2>Infos général</h2>
+<nav class="nav nav-pills nav-justified">
+   <div class="title">
+    <h2>MyClinic</h2>
+    </div>
+  <a class="nav-item nav-link" href="index.php"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Accueil</a>
+  <a class="nav-item nav-link active" href="#">Informations du patient</a>
+  <a class="nav-item nav-link disabled" href="index.php?logout='1'"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Se déconnecter</a>
+</nav>
+    
+        
+        <div class="container">
                 <div class="info">
                    <form action="infosPatient.php" method="POST">
                         <?php 
@@ -54,202 +108,114 @@
                     <ul>
                         <input type="hidden" name="id_patient" value="<?php echo $_GET['id_patient'] ?>">
                         <li>Patient: <?php echo $row['name'] ?></li>
-                        <li>Âge:<?php echo getAge($row['age']); ?></li>
+                        <li>Âge:<?php  
+                            $dob= $row['age'];
+                            function getAge($dob){
+                            $bday= new DateTime($dob);
+                            $today = new DateTime(date('d.m.y'));
+                            $diff = $today->diff($bday);
+                        return $diff->y; } ?>
+                        <?php echo getAge($row['age']);?></li>
                         <li>sexe:<?php echo $row['sexe'] ?></li>
                     </ul>
-                    <div class="top-right">
-            <a class="btn btn-primary" href="nv_consultation.php?id_patient=<?php echo $row['id_patient']; ?>">Nouvelle consultation</a>
-            <!--<button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#ConsultationModal_">Nouvelle consultation</buton>-->
-        </div>
+                </div>
+                <div class="right-button">
+                <a class="btn btn-primary" href="nv_consultation.php?id_patient=<?php echo $row['id_patient']; ?>">Nouvelle consultation</a>
+                </div>
                     </form>
                 <?php } }?>
-                </div>
-
-
+            
+        </div>
 
             <!--LISTE DE CONSULTATIONS-->
                 <?php
                 require 'config.php';
                 $id_patient=$_GET['id_patient'];
-                $patient_consultation = mysqli_query($con, "SELECT c.visit_date, c.diagnosis, c.remarques FROM consultation c
-                JOIN patient p ON c.patient_id=p.id_patient WHERE p.id_patient=$id_patient"); ?>
-                
-                  <?php  foreach($patient_consultation as $data) { ?> 
-                <!--<div class="derniere-consultation">
-                    <a href=""></a>
-                </div>-->
-            </div>
-        </div>
+                $patient_consultation = mysqli_query($con, "SELECT c.id_consultation, c.visit_date, c.diagnosis, c.remarques FROM consultation c
+                JOIN patient p ON c.patient_id=p.id_patient WHERE p.id_patient=$id_patient");
+                 ?> 
+        <div class="table-container">
         <div class="dossier_medical">
-            <div class='consultation_motif'>
-                <h2>Consultation <?php echo $data['visit_date'] ?></h2>
-                <ul>
-                    <li>Diagnostique médical: <?php echo $data['diagnosis'] ?></li>
-                    <li>Remarques: <?php echo $data['remarques'] ?></li>
-                </ul>
-            </div> <?php } ?>
-            <?php 
-            require 'config.php';
-            $id_patient=$_GET['id_patient'];
-            $count = mysqli_query($con, "SELECT o.listeMedications FROM ordonnance o
-            JOIN consultation c ON o.visit_id=c.id_consultation
-            JOIN patient p ON c.patient_id=p.id_patient 
-            WHERE p.id_patient = $id_patient");
-            if(mysqli_num_rows($count) > 0) { 
-                foreach($count as $row)?>
-            
-            <div class='Ordonnance'>
-                <h2>Ordonnance</h2>
-                <table class='table'>
-                    <thead class='thead-light'>
-                        <tr>
-                            <th scope='col'>Médicament</th>
-                        </tr>
-                    </thead>
+                <h2>CONSULTATIONS</h2>
+                <table class="table table-bordered">
+                    <tr>
+                    <th scope="col">DIAGNOSTIQUE</th>
+                    <th scope="col">REMARQUES</th>
+                    <th scope="col">DATE</th>
+                    <th></th>
+                    </tr>
                     <tbody>
+                        
+                  <?php  foreach($patient_consultation as $data) { ?> 
                         <tr>
-                            <th><?php echo $row['listeMedications'] ?></th>
+                        <td><?php echo $data['diagnosis'] ?></td>
+                        <td><?php echo $data['remarques'] ?></td>
+                        <td><?php echo $data['visit_date'] ?></td>
+                        <td>
+                        <button class="btn btn-primary prescription-button" data-visit-id="<?php echo $data['id_consultation'] ?>"><i class="fa-solid fa-eye"></i></button>
+                        </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
+           <?php }  ?>
         </div>
-        <?php } ?>
-        
-    </div>
+        </div>
+    
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--Modal consultation + ordonnance-->
-<div class="modal fade" id="ConsultationModal_<?php echo $row['id_patient']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+<!-- READ MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle consultation</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modifier Patinet</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
     <form action="addMedication.php" method="POST">
-        <div class="form-row">
-        <div class="form-group col-7">
-            <label for="">Patient</label>
-            <input type="text" class="form-control" name="name" value="<?php  echo $row['name'];?>" readonly>
-        </div>
-        <div class="form-group col-7">
-            <label for="">Age</label>
-            <input type="text" class="form-control" name="age" value="<?php  
-            $dob= $row['age'];
-        function getAge($dob){
-            $bday= new DateTime($dob);
-            $today = new DateTime(date('d.m.y'));
-            $diff = $today->diff($bday);
-            return $diff->y; } ?>
-            <?php echo getAge($row['age']);?>
-       " readonly>
-        </div>
-        <div class="form-group col-7">
-            <label for="">Date</label>
-            <input type="text" class="form-control" name="date" value="<?php date_default_timezone_set('Africa/Algiers');
-             echo date("d-m-y H:i:s");?>" readonly>
-        </div>
+      <div class="modal-body">
+
+      <input type="hidden" name="id_consultation" id="id_consultation">
+
+      
+        <div class="form-group">
+          <label>Nom</label>
+           <input type="text" class="form-control" name="listeMedications" id="listeMedications">
         </div>
 
-    <br>
-        <div class="form-row">
-            <input type="hidden" name="id_consultation">
-        <div class="form-group col-7">
-        <label>Diagnostique &nbsp;&nbsp;</label>
-        <input type="text" name="diagnostique" class="form-control">
-        </div>
-        <div class="form-group col">
-        <label>Remarques &nbsp;&nbsp;</label>
-        <textarea name="remarque" class="form-control"></textarea>
-        </div>
-        </div>
-    <br>
-    <div class="ordonnance">
-        <h4>Ordonnance</h4>
-        <table class="table" id="tbl">
-        <thead>
-                <th scope="col">Médicament</th>
-                <th scope="col">Posologie</th>
-                <th scope="col">Nbr d'unité</th>
-                <th scope="col">Qsp</th>
-                <th scope="col" colspan="2"></th>
-        </thead>
-        <tbody>
-        </tbody>
-        </table>
-        <div id="main">
-            <div class="form-row">
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="medicament">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="posologie">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="qsp">
-                </div>
-                <div id="ss">
-                <a href="javascript:data()" type="submit" class="btn btn-primary add">+</a>
-                </div>
-                </div>
-                
-        </div>
-        </div>
       </div>
-      <div id="subinputs" style="display: none">
-                <div class="form-row">
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Médicament" name="medicament">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Posologie" name="posologie">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Nombre d'unités" name="nbrunite">
-                </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="QSP" name="qsp">
-                </div>
-                </div>
-        </div>
-   
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="add_btn" name="add_btn">Sauvegarder</button>
+        <button type="submit" name="updatedata" class="btn btn-primary">Enregistrer</button>
       </div>
-    </form>  
+    </form> 
     </div>
   </div>
 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
 
 
 <script>
@@ -263,6 +229,38 @@
     }
 </script>
 
+<script>
+   function fetchPrescriptionData(visitId) {
+  // AJAX request
+  $.ajax({
+    url: 'fetch_prescription_data.php',
+    type: 'GET',
+    data: { id_consultation: visitId },
+    success: function(response) {
+      // Populate the modal with the fetched data
+      $('#listeMedications').val(response);
+
+      // Show the modal
+      $('#editModal').modal('show');
+    },
+    error: function() {
+      alert('Error occurred while fetching prescription data.');
+    }
+  });
+}
+
+$(document).ready(function() {
+  $('.prescription-button').click(function() {
+    var visitId = $(this).data('visit-id');
+
+    // Call the function to fetch and display the prescription data
+    fetchPrescriptionData(visitId);
+  });
+});    
+</script>
+
+    
+             
 
 
 </body>
