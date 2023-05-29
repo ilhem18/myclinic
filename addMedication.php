@@ -22,7 +22,7 @@ if(isset($_POST['add_btn']) && isset($_POST['id_patient'])){
         $ordo=mysqli_query($con, "INSERT INTO ordonnance(visit_id, listeMedications) VALUES ('$id_consultation','$listeMedications')");
             //$prescription_id = mysqli_insert_id($con);
         if($ordo){
-            header("Location: index.php");
+            header("Location: InfosPatient.php?id_patient=$id_patient");
         }
             
 

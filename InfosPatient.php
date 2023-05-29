@@ -37,10 +37,9 @@
     }
     .table-container {
         display: flex;
+        position: relative;
         justify-content: flex-start;
         align-items: center;
-        
-        /*height: 100%;*/
     }
 
     .dossier_medical {
@@ -52,16 +51,20 @@
     }
     .container {
         display: flex;
+        position:relative;
         justify-content: center;
         align-items: center;
         margin: 0;
+    }
+    .right-button{
+        display: flex;
+        justify-content: center;
+        padding-bottom:20px;
     }
     .info {
         justify-content: center;
         align-items: center;
         text-align: center;
-        /*background: #020f2b;
-        color: #fff;*/
     }
     .info ul {
         list-style: none;
@@ -77,7 +80,27 @@
     .info ul li {
         margin-right: 20px; /* Adjust the value as needed */
     }
-    
+    #Ordonnance{
+        display:none;
+        position: absolute;
+        top: 100px;
+        right: 50px;
+        margin-top: 100px;
+        padding:80px;
+        font-size: 24px;
+    }
+    #Ordonnance textarea{
+        background: #E8F0F2;
+        color: #023946;
+        border: 0;
+    }
+    #Ordonnance h3{
+        font-size: 24px;
+        font-weight: bold;
+        color: #023946;
+        margin: 10px 0;
+        line-height: 1.2;
+    }
    </style>
 
 </head>
@@ -95,7 +118,7 @@
         
         <div class="container">
                 <div class="info">
-                   <form action="infosPatient.php" method="POST">
+                   <form action="InfosPatient.php" method="POST">
                         <?php 
                          require 'config.php';
                          if (isset($_GET['id_patient'])) {
@@ -119,13 +142,14 @@
                         <li>sexe:<?php echo $row['sexe'] ?></li>
                     </ul>
                 </div>
-                <div class="right-button">
+            </div>
+            <div class="right-button">
                 <a class="btn btn-primary" href="nv_consultation.php?id_patient=<?php echo $row['id_patient']; ?>">Nouvelle consultation</a>
-                </div>
+            </div>
                     </form>
                 <?php } }?>
             
-        </div>
+        
 
             <!--LISTE DE CONSULTATIONS-->
                 <?php
@@ -138,69 +162,39 @@
         <div class="dossier_medical">
                 <h2>CONSULTATIONS</h2>
                 <table class="table table-bordered">
+                    <thead>
                     <tr>
                     <th scope="col">DIAGNOSTIQUE</th>
                     <th scope="col">REMARQUES</th>
                     <th scope="col">DATE</th>
                     <th></th>
                     </tr>
+                    </thead>
                     <tbody>
-                        
+                    
                   <?php  foreach($patient_consultation as $data) { ?> 
-                        <tr>
+                       <tr>   
                         <td><?php echo $data['diagnosis'] ?></td>
                         <td><?php echo $data['remarques'] ?></td>
                         <td><?php echo $data['visit_date'] ?></td>
                         <td>
-                        <button class="btn btn-primary prescription-button" data-visit-id="<?php echo $data['id_consultation'] ?>"><i class="fa-solid fa-eye"></i></button>
+                        <button class="btn btn-primary prescription-button" value="<?php echo $data['id_consultation'] ?>" onclick="fetchMedications(<?php echo $data['id_consultation'] ?>)"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary ordonnancepdf" onclick="redirectToPrescriptionPage('<?php echo $id_patient ?>', '<?php echo $data['id_consultation'] ?>')"><i class="fa-solid fa-file-medical"></i></button>
                         </td>
                         </tr>
+                        <?php }  ?>
                     </tbody>
                 </table>
-           <?php }  ?>
+           
         </div>
         </div>
-    
-    
-
-<!-- READ MODAL -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modifier Patinet</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <form action="addMedication.php" method="POST">
-      <div class="modal-body">
-
-      <input type="hidden" name="id_consultation" id="id_consultation">
-
-      
-        <div class="form-group">
-          <label>Nom</label>
-           <input type="text" class="form-control" name="listeMedications" id="listeMedications">
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="updatedata" class="btn btn-primary">Enregistrer</button>
-      </div>
-    </form> 
+    <div id="Ordonnance">
+        <h3>Liste des Médicaments: </h3>
+        <textarea id="medicationsInput" cols="30" rows="10" readonly ></textarea>
     </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
+    
 
 
 
@@ -230,36 +224,27 @@
 </script>
 
 <script>
-   function fetchPrescriptionData(visitId) {
-  // AJAX request
-  $.ajax({
-    url: 'fetch_prescription_data.php',
-    type: 'GET',
-    data: { id_consultation: visitId },
-    success: function(response) {
-      // Populate the modal with the fetched data
-      $('#listeMedications').val(response);
-
-      // Show the modal
-      $('#editModal').modal('show');
-    },
-    error: function() {
-      alert('Error occurred while fetching prescription data.');
+   function fetchMedications(consultationId) {
+  // Make an AJAX request to fetch the medications data
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var medications = xhr.responseText;
+      document.getElementById("medicationsInput").value = medications;
+      document.getElementById("Ordonnance").style.display = "block";
     }
-  });
+  };
+  xhr.open("GET", "fetch_ordonnance.php?id_consultation=" + consultationId, true);
+  xhr.send();
 }
-
-$(document).ready(function() {
-  $('.prescription-button').click(function() {
-    var visitId = $(this).data('visit-id');
-
-    // Call the function to fetch and display the prescription data
-    fetchPrescriptionData(visitId);
-  });
-});    
+ 
 </script>
 
-    
+<script>
+    function redirectToPrescriptionPage(id_patient, id_consultation){
+        window.location.href = 'ordonnancepdf.php?id_patient=' +id_patient+ '&id_consultation=' +id_consultation;
+    }
+</script> 
              
 
 
