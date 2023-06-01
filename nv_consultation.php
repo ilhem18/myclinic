@@ -19,72 +19,33 @@
         }
 
         body {
-            background: #f3f5f9;
+            background: #E8F0F2;
         }
         .wrapper{
         display: flex;
         position: relative;
 }
-        .wrapper .sidebar{
-    position: fixed;
-    width: 200px;
-    height: 100%;
-    background: #93bfd4;
-    padding: 30px 0;
-}
-.wrapper .sidebar h2{
-    color: #fff;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 100px;
-}
-.wrapper .sidebar ul li{
-    padding: 15px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    border-top: 1px solid rgba(225,255,255,0.05);
-}
-.wrapper .sidebar ul li a{
-    color: #030611ce;
-    font-size: 18px;
-    display: block;
-}
-.wrapper .sidebar ul li:hover{
-    background: rgb(56, 79, 133);
-}
-.wrapper .sidebar ul li:hover a{
-    color: #fff;
-    /*color: rgb(3, 3, 3);*/
-    text-decoration: none;
-}
+.title h2{
+        color: #020f2b;
+        text-transform: uppercase;
+        margin-left: 20px;
+        font-size:40px;
+    }
+    nav{
+        padding: 10px 20px;
+    }
         .wrapper .main_content {
             width: 100%;
-    margin-left: 200px;
         }
 
         .wrapper .main_content .header {
-            width: 100%;
-            height: 350px;
-            margin-top: 10px;
+            width: 90%;
+            /*height: 350px;*/
+            margin-top: 20px;
+            margin-left: 70px;
             padding: 30px;
-            background: #fff;
             color: #717171;
             border-bottom: 2px solid #e0e4e8;
-        }
-
-        .wrapper .top-right button {
-            margin-top: 50px;
-            border: none;
-            width: 270px;
-            font-size: 20px;
-            background: #1f97cf;
-            padding: 20px 50px;
-            margin-left: 50px;
-            margin-bottom: 20px;
-            border-radius: 20px;
-        }
-
-        .wrapper .top-right button a {
-            color: #f3f5f9;
         }
 
         .wrapper .top-right button a:hover {
@@ -92,14 +53,18 @@
         }
 
         .wrapper .dossier_medical {
-            padding: 50px;
-            width: 100%;
+            padding-bottom: 50px;
+            margin-left: 70px;
+            width: 90%;
             background: #fff;
             text-align: center;
             justify-content: center;
             border-bottom: 5px solid #e0e4e8;
         }
 
+        .wrapper .dossier_medical h4{
+            padding: 30px;
+        }
         .wrapper .dossier_medical button {
             padding: 20px 0;
             margin: 10px;
@@ -111,40 +76,21 @@
             border-radius: 15px;
             cursor: pointer;
         }
-        .flex{
-            display: flex;
-            gap: 1.5rem;
-        }
-        .delete{
-            text-decoration: none;
-            display: inline-block;
-            background: #f44336;
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: bold;
-            width: 30px;
-            height: 30px;
-            margin-left: auto;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-        .delete-button {
-        font-size: 14px; /* Adjust the font-size value to make the button smaller */
-        padding: 0; /* Adjust the padding values to resize the button accordingly */
-    }
+        
     </style>
 </head>
 
 <body>
+    
+    <nav class="nav nav-pills nav-justified">
+   <div class="title">
+    <h2>MyClinic</h2>
+    </div>
+  <a class="nav-item nav-link" href="index.php"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Accueil</a>
+  <a class="nav-item nav-link active" href="#">Informations du patient</a>
+  <a class="nav-item nav-link disabled" href="index.php?logout='1'"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Se déconnecter</a>
+</nav>
     <div class="wrapper">
-    <div class="sidebar">
-            <h2>MyClinic</h2>
-            <ul>
-                <li><a href="index.php"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Accueil</a></li>
-                <li><a href="index.php?logout='1'"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Se déconnecter</a></li>
-            </ul>
-        </div>
         <div class="main_content">
             <div class="header">
                 <h2>Général</h2>
@@ -190,18 +136,14 @@
             <div class="ordonnance">
                 <h4>Ordonnance</h4>
                 <input type="hidden" name="id_ordonnance" id="id_ordonnance">
-                <div class="form-group">
-   
-    
-        
-        <textarea name="textarea_data" rows="5" cols="100"></textarea>
-        
-   
-</div>
+                <div class="form-group">     
+                    <textarea name="textarea_data" rows="5" cols="100"></textarea>
+                </div>
             </div>
+            <button name="add_btn">Sauvegarder</button>
             </div>
             <div class="top-right">
-                <button name="add_btn">Sauvegarder</a></button>
+                
             </div>
         </div>
     </div>
