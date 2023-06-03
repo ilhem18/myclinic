@@ -1,30 +1,5 @@
 <?php
-//============================================================+
-// File name   : example_006.php
-// Begin       : 2008-03-04
-// Last Update : 2013-05-14
-//
-// Description : Example 006 for TCPDF class
-//               WriteHTML and RTL support
-//
-// Author: Nicola Asuni
-//
-// (c) Copyright:
-//               Nicola Asuni
-//               Tecnick.com LTD
-//               www.tecnick.com
-//               info@tecnick.com
-//============================================================+
 
-/**
- * Creates an example PDF TEST document using TCPDF
- * @package com.tecnick.tcpdf
- * @abstract TCPDF - Example: WriteHTML and RTL support
- * @author Nicola Asuni
- * @since 2008-03-04
- */
-
-// Include the main TCPDF library (search for installation path).
 require_once('TCPDF-main/tcpdf.php');
 require 'config.php';
 //Retrieve patient informations
@@ -46,7 +21,7 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'A5', true, 'UTF-8', false);
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(10, 10, 10);
 
 
 // set image scale factor

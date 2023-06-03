@@ -241,10 +241,11 @@
 </script>
 
 <script>
-    function redirectToPrescriptionPage(id_patient, id_consultation){
-        window.location.href = 'ordonnancepdf.php?id_patient=' +id_patient+ '&id_consultation=' +id_consultation;
+    function redirectToPrescriptionPage(id_patient, id_consultation) {
+        var url = 'ordonnancepdf.php?id_patient=' + id_patient + '&id_consultation=' + id_consultation;
+        window.open(url, '_blank');
     }
-</script> 
+</script>
              
 
 

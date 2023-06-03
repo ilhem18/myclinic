@@ -89,7 +89,7 @@ body{
   border-bottom: 2px solid #fff;
   display: block;
   width: 100%;
-  padding: 15px 0 10px 0;
+  padding: 15px 0 20px 0;
   font-size: 18px;
   color: #fff;
 }

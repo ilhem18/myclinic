@@ -179,18 +179,19 @@
 
 <!--search js-->
 <script>
- function myFunction() {
+function myFunction() {
   // Declare variables
-  var input, filter, table, tr, te, th, i, txtValue;
+  var input, filter, table, tr, th, i, txtValue;
   input = document.getElementById("search");
   filter = input.value.toUpperCase();
   table = document.getElementById("data-table");
   tr = table.getElementsByTagName("tr");
-  // Loop through all table rows, and hide those who don't match the search query
+  
+  // Loop through all table rows, and hide those that don't match the search query
   for (i = 0; i < tr.length; i++) {
-    th = tr[i].getElementsByTagName("td")[0];
+    th = tr[i].getElementsByTagName("td")[1]; // Use index 1 for the "Nom" column
     if (th) {
-      txtValue = th.textContent || td.innerText;
+      txtValue = th.textContent || th.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
@@ -200,6 +201,14 @@
   }
 }
 </script>
+
+
+
+
+
+
+
+
 <!--search js ends-->
 
 <!--edit-->
@@ -219,6 +228,7 @@
       $('#name').val(data[1]);
       $('#age').val(data[2]);
       $('#sexe').val(data[3]);
+      $('#sexe').val(data[4]);
     });
   });
 </script>

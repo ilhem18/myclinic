@@ -142,9 +142,6 @@
             </div>
             <button name="add_btn">Sauvegarder</button>
             </div>
-            <div class="top-right">
-                
-            </div>
         </div>
     </div>
     </form>
