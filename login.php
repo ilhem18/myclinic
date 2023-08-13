@@ -98,22 +98,7 @@ body{
   outline: 0;
   border-bottom-color: rgb(6, 9, 189);
 }
-.form-control label{
-  position: absolute;
-  top: 15px;
-  left: 0;
-}
-.form-control label span{
-  display: inline-block;
-  font-size: 18px;
-  min-width: 5px;
-  transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.form-control input:focus + label span,
-.form-control input:valid + label span{
-  color: rgb(83, 144, 201);
-  transform: translateY(-30px);
-}
+
     </style>
 </head>
 <body>
@@ -121,12 +106,10 @@ body{
         <h1>CONNEXION</h1>
         <form action="" method="post">
           <div class="form-control">
-            <input type="text" name="username" id="username" value="" required>
-            <label>Nom d'utilisateur</label>
+            <input type="text" name="username" id="username" value="" placeholder="Nom d'utilisateur" required>
           </div>
           <div class="form-control">
-            <input type="password" name="password" id="password" value="" required>
-            <label>Mot de passe</label>
+            <input type="password" name="password" id="password" value="" placeholder="mot de passe" required>
           </div>
           <button name="login" class="btn">Se connecter</button>
           <p class="text">Vous n'avez pas encore un compte? <a href="register.php">Inscrivez-vous</a></p>
@@ -134,15 +117,6 @@ body{
       </div>
 
 
-      <script>
-        const labels = document.querySelectorAll('.form-control label')
-
-            labels.forEach(label => {
-                label.innerHTML = label.innerText
-                    .split('')
-                    .map((letter, idx) => `<span style="transition-delay:${idx * 50}ms">${letter}</span>`)
-                    .join('')
-            })
-      </script>
+      
 </body>
 </html>
