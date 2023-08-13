@@ -69,13 +69,13 @@
       <td scope="row"><?php echo $row['name'] ?></td>
       <td><?php echo $row['age'] ?></td>
       <td>
-        <a href="infosPatient.php?id_patient=<?php echo $row['id_patient']; ?>" class="btn btn-primary"><i class="fa-solid fa-file" title="afficher"></i></a>
+        <a href="infosPatient.php?id_patient=<?php echo $row['id_patient']; ?>" class="btn btn-primary">afficher</a>
       </td>
       <td>
-        <button class="btn btn-primary editbtn"><i class="fa-solid fa-file-pen" title="modifier"></i></button>
+        <button class="btn btn-primary editbtn">modifier</button>
       </td>
       <td>
-        <a class="btn btn-primary" href="crudPatient.php?delete=<?php echo $row['id_patient']; ?>" ><i class="fa-solid fa-trash" title="supprimer"></i></a>
+        <a class="btn btn-primary" href="crudPatient.php?delete=<?php echo $row['id_patient']; ?>" >supprimer</a>
       </td>
     </tr>
     <?php } ?>
